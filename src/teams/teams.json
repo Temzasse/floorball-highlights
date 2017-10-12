@@ -1,0 +1,72 @@
+{
+  "happee": {
+    "id": "happee",
+    "channelId": "UC54IfFpVqGZWqMk9B93QO7g",
+    "name": "Happee"
+  },
+  "classic": {
+    "id": "classic",
+    "channelId": "UCE2QloA531eoK60xzmc2lMw",
+    "name": "Classic"
+  },
+  "oilers": {
+    "id": "oilers",
+    "channelId": "UCJ9RDVF5ujzo9AduwVOoL1g",
+    "name": "Oilers"
+  },
+  "spv": {
+    "id": "spv",
+    "channelId": "UC3u0im1DWCpylwzzrxCTS7A",
+    "name": "SPV"
+  },
+  "eraviikingit": {
+    "id": "eraviikingit",
+    "channelId": "UCF1cHj7gQ3xYfLdRX_ez5Og",
+    "name": "EräViikingit"
+  },
+  "nokiankrp": {
+    "id": "nokiankrp",
+    "channelId": "UCta9kKdcf0Jz3vJZ9Ck7g5g",
+    "name": "Nokian KrP"
+  },
+  "indians": {
+    "id": "indians",
+    "channelId": "UCsAaxQyZodtp5hlPO8K6ypA",
+    "name": "Indians"
+  },
+  "ols": {
+    "id": "ols",
+    "channelId": "UCOmYYq4dZYG_OKnbQtp9foQ",
+    "name": "OLS"
+  },
+  "koovee": {
+    "id": "koovee",
+    "channelId": "UCDgbAAMDhxRG_hgnMmmeXMg",
+    "name": "Koovee"
+  },
+  "tps": {
+    "id": "tps",
+    "channelId": "UCdR0rF0DHQnyBq6NXi29PsA",
+    "name": "TPS"
+  },
+  "sbwelhot": {
+    "id": "sbwelhot",
+    "channelId": "UCCxq3dAxMZwAEQDfmg-BYQw",
+    "name": "SB Welhot"
+  },
+  "lasb": {
+    "id": "lasb",
+    "channelId": "UCIXEMhYS-SIrIgvuXb2TiiA",
+    "name": "LASB"
+  },
+  "salba": {
+    "id": "salba",
+    "channelId": "UCkVnTopqrELaE0_sDlBuy9w",
+    "name": "SalBa"
+  },
+  "steelers": {
+    "id": "steelers",
+    "channelId": "UCBe1fDaBYZQU8yZ7zPPqABw",
+    "name": "Steelers"
+  }
+}

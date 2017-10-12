@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import styled from 'styled-components';
+import { Layout, Gutter } from 'react-components-kit';
+
+import withAPIs from './init/withAPIs';
+import TeamListMenu from './teams/listmenu';
+import Playlist from './videos/playlist';
+import VideoDetails from './videos/details';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Layout>
+        <TeamListMenu />
+        <Gutter amount='60px' />
+        <Layout.Box flex='2'>
+          <Playlist />
+        </Layout.Box>
+        <Layout.Box flex='3'>
+          <VideoDetails />
+        </Layout.Box>
+      </Layout>
     );
   }
 }
 
-export default App;
+export default withAPIs(App);
