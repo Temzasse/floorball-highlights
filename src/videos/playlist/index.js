@@ -1,45 +1,50 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import { getYoutubeSearchApi } from '../../services/utils';
+import format from 'date-fns/format';
+import Text from 'react-components-kit/dist/Text';
+import Gutter from 'react-components-kit/dist/Gutter';
+import Layout from 'react-components-kit/dist/Layout';
+import media from 'react-components-kit/dist/media';
+import fiLocale from 'date-fns/locale/fi';
+
+import { getVideosBySelectedTeam, selectVideo } from '../videos.ducks';
+import { getSelectedTeam } from '../../teams/teams.ducks';
 
 const propTypes = {
-  something: PropTypes.any,
+  videos: PropTypes.array.isRequired,
+  selectedTeam: PropTypes.object,
 };
 
 class Playlist extends Component {
-  state = {
-    videos: [],
-  }
-
-  componentWillMount() {
-    const yt = getYoutubeSearchApi();
-    yt.search.list({
-      channelId: 'UC54IfFpVqGZWqMk9B93QO7g',
-      part: 'snippet',
-      maxResults: 20,
-      order: 'date',
-    }).then(({ result }) => this.setState({ videos: result.items }));
-  }
-
   render() {
-    const { videos } = this.state;
-    console.debug('[videos]', videos);
+    const { videos, selectedTeam } = this.props;
 
     return (
       <PlaylistWrapper>
-        <Heading>Videot</Heading>
+        <Heading>{selectedTeam.name} videot</Heading>
 
         <Videos>
-          {videos.map(({ id, snippet }) =>
-            <VideoRow key={id.videoId}>
-              <Thumbnail
-                src={snippet.thumbnails.default.url}
-                w={snippet.thumbnails.default.width}
-                h={snippet.thumbnails.default.height}
-              />
-              <Info>
-                {snippet.title}
+          {videos.map(video =>
+            <VideoRow
+              key={video.id}
+              onClick={() => this.props.selectVideo(video)}
+            >
+              <Thumbnail img={video.thumbnails.medium.url} />
+              <Info column>
+                <Text size='14px' bold>
+                  {video.title}
+                </Text>
+                <Gutter vertical amount='8px' />
+                <Text size='14px'>
+                  {format(
+                    new Date(video.publishedAt),
+                    'Do MMMM YYYY',
+                    { locale: fiLocale },
+                  )}
+                </Text>
               </Info>
             </VideoRow>
           )}
@@ -52,7 +57,6 @@ class Playlist extends Component {
 const PlaylistWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px 32px;
 `;
 
 const Heading = styled.h2`
@@ -69,20 +73,62 @@ const Videos = styled.div`
 const VideoRow = styled.div`
   display: flex;
   margin-bottom: 16px;
-`;
-
-const Thumbnail = styled.img`
-  width: ${props => props.w}px;
-  height: ${props => props.h}px;
-  max-width: 100%;
-  margin-right: 16px;
+  background-color: #fff;
+  cursor: pointer;
   border-radius: 4px;
+
+  ${media.tablet`
+    margin-bottom: 32px;
+  `}
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &:active {
+    background-color: #eee;
+  }
 `;
 
-const Info = styled.div`
+const Thumbnail = styled.div`
+  width: 140px;
+  height: 90px;
+  background-color: #eee;
+  background-image: url(${props => props.img});
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  border-radius: 4px;
+
+  ${media.tablet`
+    width: 105px;
+    height: 67px;
+  `}
+`;
+
+const Info = styled(Layout)`
   flex: 1;
+  padding: 8px 16px;
+
+  ${media.tablet`
+    padding: 0px;
+    padding-left: 12px;
+  `}
 `;
 
 Playlist.propTypes = propTypes;
 
-export default Playlist;
+const mapStateToProps = state => ({
+  videos: getVideosBySelectedTeam(state),
+  selectedTeam: getSelectedTeam(state),
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  selectVideo,
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Playlist);

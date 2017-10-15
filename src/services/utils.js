@@ -4,11 +4,12 @@ export const getYoutubeSearchApi = () => {
 
 export const normalizeYoutubeResults = result => {
   return result.items.map(res => ({
-    type: 'youtube',
     id: res.id.videoId,
-    artist: res.snippet.channelTitle,
+    channelTitle: res.snippet.channelTitle,
     title: res.snippet.title,
     thumbnails: res.snippet.thumbnails,
+    description: res.snippet.description,
+    publishedAt: res.snippet.publishedAt,
     meta: {
       etag: res.etag,
     }

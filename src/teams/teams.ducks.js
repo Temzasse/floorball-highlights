@@ -23,7 +23,8 @@ const initialState = {
 
 export default handleActions({
   [TEAMS.SELECT]: (state, action) => update(state, {
-    selected: { $set: action.payload },
+    selected: { $set: action.payload.id },
+    detailsVisible: { $set: false },
   }),
   [TEAMS.TOGGLE_DETAILS]: state => update(state, {
     detailsVisible: { $set: !state.detailsVisible },
@@ -31,7 +32,7 @@ export default handleActions({
 }, initialState);
 
 // Selectors
-export const getSelectedId = state => state.teams.selected;
+export const getSelectedTeamId = state => state.teams.selected;
 export const getTeams = state => Object.values(state.teams.byId);
 export const getDetailsVisibility = state => state.teams.detailsVisible;
 export const getSelectedTeam = state => {
@@ -40,17 +41,22 @@ export const getSelectedTeam = state => {
 
 // Sagas
 function * fetchTeamVideosHandler() {
-  try {
-    yield console.log('moi');
-  } catch (error) {
-    yield console.error('Error in fetchProgramHandler', error);
-  }
+  yield console.log('FOOOO');
+}
+
+function * foo() {
+  yield console.log('FOOOO');
 }
 
 function * watchFetchTeamVideos() {
-  yield* takeEvery(TEAMS.SELECT, fetchTeamVideosHandler);
+  yield takeEvery(TEAMS.SELECT, fetchTeamVideosHandler);
+}
+
+function * watchFoo() {
+  yield takeEvery(TEAMS.TOGGLE_DETAILS, foo);
 }
 
 export function * teamsSagas() {
   yield fork(watchFetchTeamVideos);
+  yield fork(watchFoo);
 }

@@ -38,7 +38,7 @@ export default class YoutubePlayer {
     this.player.stopVideo();
   };
 
-  load = track => {
-    this.player.loadVideoById({ videoId: track.id });
+  load = videoId => {
+    this.player.loadVideoById({ videoId });
   };
 }

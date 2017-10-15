@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Icon } from 'react-components-kit';
 
 import logoMapper from '../logoMapper';
@@ -43,7 +43,8 @@ class TeamListMenuContainer extends Component {
           {teams.map(team =>
             <TeamRow
               expanded={teamDetailsVisible}
-              onClick={() => this.props.selectTeam(team.id)}
+              onClick={() => this.props.selectTeam(team)}
+              key={team.id}
             >
               <TeamLogo logo={logoMapper[team.id]} />
               <TeamName>{team.name}</TeamName>
@@ -66,7 +67,8 @@ const Wrapper = styled.div`
   bottom: 0;
   display: flex;
   flex-direction: column;
-  background-color: #d4ddde;
+  background-color: #f5f5f5;
+  box-shadow: 2px 0px 20px rgba(0,0,0,0.3);
 `;
 
 const ToggleDetails = styled.div`
@@ -75,7 +77,15 @@ const ToggleDetails = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #333;
+  background-color: ${props => props.theme.primaryColor};
+
+  &:hover {
+    background-color: ${props => props.theme.primaryColorDark};
+  }
+
+  &:active {
+    background-color: ${props => props.theme.primaryColorDarkest};
+  }
 `;
 
 const Teams = styled.div`
@@ -95,11 +105,12 @@ const TeamLogo = styled.div`
   display: inline-block;
   flex: none;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background: #eee;
+  border: 1px solid ${props => props.theme.primaryColor};
+  background-color: #eee;
   background-image: url(${props => props.logo});
   background-position: center center;
   background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const TeamName = styled.div`
@@ -119,7 +130,7 @@ const TeamRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: background-color 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: #ddd;
