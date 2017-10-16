@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Layout, Gutter, media } from 'react-components-kit';
+import Layout from 'react-components-kit/dist/Layout';
+import Gutter from 'react-components-kit/dist/Gutter';
+import media from 'react-components-kit/dist/media';
 
 import { getSelectedTeam } from './teams/teams.ducks';
 import { getSelectedVideo } from './videos/videos.ducks';

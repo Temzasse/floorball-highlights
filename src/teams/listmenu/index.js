@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled, { css } from 'styled-components';
-import { Icon } from 'react-components-kit';
+import Icon from 'react-components-kit/dist/Icon';
 
 import logoMapper from '../../logoMapper';
 import {
