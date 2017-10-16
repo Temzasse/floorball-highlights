@@ -103,13 +103,14 @@ const VideoDetailsWrapper = styled(Layout)`
     height: 100vh;
     width: 100vw;
     z-index: 10;
-    position: fixed;
+    position: absolute;
     top: 0px;
     left: 0px;
     background-color: #fff;
     transform: translateY(${props => props.active ? '0px' : '100%'});
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   `}
 `;
 
