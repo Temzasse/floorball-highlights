@@ -17,12 +17,16 @@ export const normalizeYoutubeResults = (result, team) => {
   }));
 };
 
-const invalidTerms = ['pressi', 'lehdistö', 'jälkipelit', 'heimosoturit'];
+const invalidTerms = [
+  'pressi', 'lehdist', 'lkipelit', 'heimosoturit', 'haastat'
+];
+
 const highlightsTerms = ['highlights', 'kooste'];
 
 export const filterVideos = videos => {
   return videos.filter(({ title }) => {
     const t = title.toLowerCase();
+    console.debug('[t]', t);
     let isValid = true;
 
     invalidTerms.forEach(term => {
