@@ -41,16 +41,8 @@ export const getSelectedTeam = state => {
 };
 
 // Sagas
-function * fetchTeamVideosHandler() {
-  yield console.log('FOOOO');
-}
-
 function * foo() {
   yield console.log('FOOOO');
-}
-
-function * watchFetchTeamVideos() {
-  yield takeEvery(TEAMS.SELECT, fetchTeamVideosHandler);
 }
 
 function * watchFoo() {
@@ -58,6 +50,5 @@ function * watchFoo() {
 }
 
 export function * teamsSagas() {
-  yield fork(watchFetchTeamVideos);
   yield fork(watchFoo);
 }

@@ -3,15 +3,18 @@ import createSagaMiddleware from 'redux-saga';
 import { fork } from 'redux-saga/effects';
 import teams, { teamsSagas } from './teams/teams.ducks';
 import videos, { videosSagas } from './videos/videos.ducks';
+import initReducer, { initSagas } from './init/init.ducks';
 
 const rootReducer = combineReducers({
   teams,
   videos,
+  init: initReducer,
 });
 
 function* rootSaga() {
   yield fork(videosSagas);
   yield fork(teamsSagas);
+  yield fork(initSagas);
 }
 
 const sagaMiddleware = createSagaMiddleware();

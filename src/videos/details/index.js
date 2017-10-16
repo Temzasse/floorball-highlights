@@ -21,7 +21,7 @@ import {
   getSelectedVideo,
   getSelectedVideoTeam,
   getVideoActiveStatus,
-  toggleActiveStatus,
+  disableActiveStatus,
 } from '../videos.ducks';
 
 const propTypes = {
@@ -41,7 +41,7 @@ class VideoDetails extends Component {
 
   close = () => {
     this.player.pause();
-    this.props.toggleActiveStatus();
+    this.props.disableActiveStatus();
   }
 
   render() {
@@ -87,6 +87,7 @@ class VideoDetails extends Component {
             name='ios-close'
             size='40px'
             onClick={this.close}
+            color={theme.primaryColor}
           />
         </MobileFooter>
       </VideoDetailsWrapper>
@@ -101,7 +102,7 @@ const VideoDetailsWrapper = styled(Layout)`
   ${media.tablet`
     height: 100vh;
     width: 100vw;
-    z-index: 9999;
+    z-index: 10;
     position: fixed;
     top: 0px;
     left: 0px;
@@ -165,7 +166,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleActiveStatus,
+  disableActiveStatus,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoDetails);

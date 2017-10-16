@@ -72,7 +72,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   background-color: #f5f5f5;
   box-shadow: 2px 0px 16px rgba(0,0,0,0.2);
-  z-index: 999;
+  z-index: 9;
 `;
 
 const ToggleDetails = styled.div`
