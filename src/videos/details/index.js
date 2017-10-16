@@ -107,6 +107,8 @@ const VideoDetailsWrapper = styled(Layout)`
     left: 0px;
     background-color: #fff;
     transform: translateY(${props => props.active ? '0px' : '100%'});
+    overflow-x: hidden;
+    overflow-y: scroll;
   `}
 `;
 
