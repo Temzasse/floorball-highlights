@@ -48,7 +48,7 @@ class VideoDetails extends Component {
     const { active, selectedVideo, selectedVideoTeam } = this.props;
     return (
       <VideoDetailsWrapper active={active} hide={!selectedVideo} column>
-        <Layout.Box flex='1'>
+        <Layout.Box>
           <Video><div id='ytPlayer' /></Video>
           {selectedVideo &&
             <Details column>
@@ -101,6 +101,7 @@ const VideoDetailsWrapper = styled(Layout)`
   ${media.tablet`
     height: 100vh;
     width: 100vw;
+    z-index: 9999;
     position: fixed;
     top: 0px;
     left: 0px;
