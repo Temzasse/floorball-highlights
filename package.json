@@ -2,7 +2,7 @@
   "name": "floorball-highlights",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://temzasse.github.io/floorball-highlights/",
+  "homepage": "https://temzasse.github.io/floorball-highlights",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "date-fns": "^1.29.0",
@@ -36,6 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "clean:install": "rm -rf node_modules && npm install"
+    "clean:install": "rm -rf node_modules && npm install",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
