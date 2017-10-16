@@ -5,12 +5,13 @@ import { bindActionCreators } from 'redux';
 import styled, { css } from 'styled-components';
 import { Icon } from 'react-components-kit';
 
-import logoMapper from '../logoMapper';
+import logoMapper from '../../logoMapper';
 import {
   getTeams,
   selectTeam,
   toggleTeamDetails,
   getDetailsVisibility,
+  getSelectedTeam,
 } from '../teams.ducks';
 
 
@@ -19,11 +20,12 @@ const propTypes = {
   selectTeam: PropTypes.func.isRequired,
   teams: PropTypes.array.isRequired,
   teamDetailsVisible: PropTypes.bool.isRequired,
+  selectedTeam: PropTypes.object,
 };
 
 class TeamListMenuContainer extends Component {
   render() {
-    const { teams, teamDetailsVisible } = this.props;
+    const { teams, teamDetailsVisible, selectedTeam } = this.props;
 
     return (
       <Wrapper expanded={teamDetailsVisible}>
@@ -42,9 +44,10 @@ class TeamListMenuContainer extends Component {
         <Teams>
           {teams.map(team =>
             <TeamRow
-              expanded={teamDetailsVisible}
-              onClick={() => this.props.selectTeam(team)}
               key={team.id}
+              expanded={teamDetailsVisible}
+              selected={selectedTeam && (team.id === selectedTeam.id)}
+              onClick={() => this.props.selectTeam(team)}
             >
               <TeamLogo logo={logoMapper[team.id]} />
               <TeamName>{team.name}</TeamName>
@@ -68,7 +71,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f5f5f5;
-  box-shadow: 2px 0px 20px rgba(0,0,0,0.3);
+  box-shadow: 2px 0px 16px rgba(0,0,0,0.2);
 `;
 
 const ToggleDetails = styled.div`
@@ -93,6 +96,7 @@ const Teams = styled.div`
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,12 +105,12 @@ const Teams = styled.div`
 const TeamLogo = styled.div`
   height: 40px;
   width: 40px;
-  margin: 5px 10px;
+  margin: 10px;
   display: inline-block;
   flex: none;
   border-radius: 8px;
-  border: 1px solid ${props => props.theme.primaryColor};
-  background-color: #eee;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
   background-image: url(${props => props.logo});
   background-position: center center;
   background-size: cover;
@@ -123,7 +127,7 @@ const TeamName = styled.div`
 `;
 
 const TeamRow = styled.div`
-  height: 50px;
+  height: 60px;
   width: 100%;
   position: relative;
   flex: none;
@@ -140,6 +144,19 @@ const TeamRow = styled.div`
     background-color: #ccc;
   }
 
+  ${props => props.selected && css`
+    background-color: ${props.theme.primaryColorLightest};
+
+    &:hover,
+    &:active {
+      background-color: ${props.theme.primaryColorLightest};
+    }
+
+    ${TeamLogo} {
+      border: 1px solid ${props.theme.primaryColor};
+    }
+  `}
+
   ${props => props.expanded && css`
     ${TeamName} {
       pointer-events: none;
@@ -153,6 +170,7 @@ TeamListMenuContainer.propTypes = propTypes;
 const mapStateToProps = state => ({
   teams: getTeams(state),
   teamDetailsVisible: getDetailsVisibility(state),
+  selectedTeam: getSelectedTeam(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

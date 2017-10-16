@@ -31,13 +31,16 @@ class App extends Component {
               <VideoDetails />
               {!selectedVideo &&
                 <DesktopEmpty>
-                  <EmptyState img={playImg} text='Valitse video' />
+                  <EmptyState img={playImg} text='Valitse video listasta' />
                 </DesktopEmpty>
               }
             </VideoDetailsWrapper>
           ] :
           <EmptyWrapper flex='1'>
-            <EmptyState img={fieldImg} text='Valitse ensin joukkue logosta' />
+            <EmptyState
+              img={fieldImg}
+              text='Valitse ensin joukkue klikkaamalla logoa'
+            />
           </EmptyWrapper>
         }
 
@@ -56,6 +59,7 @@ const PlaylistWrapper = styled(Layout.Box)`
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 16px 32px;
   width: 450px;
 

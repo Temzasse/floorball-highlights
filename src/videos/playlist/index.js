@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import format from 'date-fns/format';
 import Text from 'react-components-kit/dist/Text';
 import Gutter from 'react-components-kit/dist/Gutter';
 import Layout from 'react-components-kit/dist/Layout';
 import media from 'react-components-kit/dist/media';
+import format from 'date-fns/format';
 import fiLocale from 'date-fns/locale/fi';
 
 import { getVideosBySelectedTeam, selectVideo } from '../videos.ducks';
 import { getSelectedTeam } from '../../teams/teams.ducks';
+import theme from '../../assets/theme';
 
 const propTypes = {
   videos: PropTypes.array.isRequired,
@@ -34,11 +35,12 @@ class Playlist extends Component {
             >
               <Thumbnail img={video.thumbnails.medium.url} />
               <Info column>
-                <Text size='14px' bold>
+                <Text size='14px' bold color={theme.secondaryColor}>
                   {video.title}
                 </Text>
                 <Gutter vertical amount='8px' />
-                <Text size='14px'>
+                <Text size='12px' color='#888'>
+                  Julkaistu:&nbsp;
                   {format(
                     new Date(video.publishedAt),
                     'Do MMMM YYYY',

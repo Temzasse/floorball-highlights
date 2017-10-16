@@ -2,7 +2,7 @@ export const getYoutubeSearchApi = () => {
   return window.gapi.client.youtube;
 };
 
-export const normalizeYoutubeResults = result => {
+export const normalizeYoutubeResults = (result, team) => {
   return result.items.map(res => ({
     id: res.id.videoId,
     channelTitle: res.snippet.channelTitle,
@@ -10,8 +10,7 @@ export const normalizeYoutubeResults = result => {
     thumbnails: res.snippet.thumbnails,
     description: res.snippet.description,
     publishedAt: res.snippet.publishedAt,
-    meta: {
-      etag: res.etag,
-    }
+    meta: { etag: res.etag },
+    team,
   }));
 };

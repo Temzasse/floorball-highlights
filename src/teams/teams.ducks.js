@@ -34,6 +34,7 @@ export default handleActions({
 // Selectors
 export const getSelectedTeamId = state => state.teams.selected;
 export const getTeams = state => Object.values(state.teams.byId);
+export const getTeamsById = state => state.teams.byId;
 export const getDetailsVisibility = state => state.teams.detailsVisible;
 export const getSelectedTeam = state => {
   return state.teams.byId[state.teams.selected];

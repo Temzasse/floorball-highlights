@@ -2,6 +2,7 @@
   "name": "floorball-highlights",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://temzasse.github.io/floorball-highlights/",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "date-fns": "^1.29.0",
@@ -26,6 +27,7 @@
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.1.0",
+    "gh-pages": "^1.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "redux-logger": "^3.0.6"
   },

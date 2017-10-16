@@ -3,13 +3,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Layout, Icon, Heading, Text, media } from 'react-components-kit';
+import Layout from 'react-components-kit/dist/Layout';
+import Icon from 'react-components-kit/dist/Icon';
+import Heading from 'react-components-kit/dist/Heading';
+import Text from 'react-components-kit/dist/Text';
+import media from 'react-components-kit/dist/media';
+import Divider from 'react-components-kit/dist/Divider';
+import Gutter from 'react-components-kit/dist/Gutter';
+import format from 'date-fns/format';
+import fiLocale from 'date-fns/locale/fi';
 
 import YoutubePlayer from '../../services/youtube';
 import theme from '../../assets/theme';
+import logoMapper from '../../logoMapper';
 
 import {
   getSelectedVideo,
+  getSelectedVideoTeam,
   getVideoActiveStatus,
   toggleActiveStatus,
 } from '../videos.ducks';
@@ -35,17 +45,39 @@ class VideoDetails extends Component {
   }
 
   render() {
-    const { active, selectedVideo } = this.props;
+    const { active, selectedVideo, selectedVideoTeam } = this.props;
     return (
       <VideoDetailsWrapper active={active} hide={!selectedVideo} column>
         <Layout.Box flex='1'>
           <Video><div id='ytPlayer' /></Video>
           {selectedVideo &&
-            <Details>
+            <Details column>
               <Heading h2 color={theme.secondaryColor}>
                 {selectedVideo.title}
               </Heading>
               <Text>{selectedVideo.description}</Text>
+              <Divider />
+              <Layout align='center'>
+                <Layout.Box>
+                  <TeamLogo logo={logoMapper[selectedVideoTeam.id]} />
+                </Layout.Box>
+                <Gutter />
+                <Layout.Box flex='1'>
+                  <Layout column>
+                    <Text size='18px' bold>
+                      {selectedVideoTeam.name}
+                    </Text>
+                    <Text size='14px' color='#888'>
+                      Julkaistu:&nbsp;
+                      {format(
+                        new Date(selectedVideo.publishedAt),
+                        'Do MMMM YYYY',
+                        { locale: fiLocale },
+                      )}
+                    </Text>
+                  </Layout>
+                </Layout.Box>
+              </Layout>
             </Details>
           }
         </Layout.Box>
@@ -91,8 +123,10 @@ const Video = styled.div`
   }
 `;
 
-const Details = styled.div`
-  padding: 0px 16px;
+const Details = styled(Layout)`
+  ${media.tablet`
+    padding: 0px 16px;
+  `}
 `;
 
 const MobileFooter = styled(Layout)`
@@ -107,10 +141,23 @@ const MobileFooter = styled(Layout)`
   `}
 `;
 
+const TeamLogo = styled.div`
+  height: 80px;
+  width: 80px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  background-image: url(${props => props.logo});
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+`;
+
 VideoDetails.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   selectedVideo: getSelectedVideo(state),
+  selectedVideoTeam: getSelectedVideoTeam(state),
   active: getVideoActiveStatus(state),
 });
 

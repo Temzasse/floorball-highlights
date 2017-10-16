@@ -1,7 +1,7 @@
 import { fork, takeLatest, put } from 'redux-saga/effects';
 import { handleActions, createAction } from 'redux-actions';
 import update from 'immutability-helper';
-import { TEAMS, getSelectedTeamId } from '../teams/teams.ducks';
+import { TEAMS, getSelectedTeamId, getTeamsById } from '../teams/teams.ducks';
 import {
   getYoutubeSearchApi,
   normalizeYoutubeResults,
@@ -48,6 +48,11 @@ export const getVideosBySelectedTeam = state => {
   const videosByTeam = getVideosByTeams(state);
   return videosByTeam[selectedTeam] || [];
 };
+export const getSelectedVideoTeam = state => {
+  const teams = getTeamsById(state);
+  const video = getSelectedVideo(state);
+  return video ? teams[video.team.id] : {};
+};
 
 // Sagas
 function * fetchTeamVideosHandler({ payload: team }) {
@@ -61,7 +66,7 @@ function * fetchTeamVideosHandler({ payload: team }) {
     });
     yield put(receiveVideos({
       team,
-      videos: normalizeYoutubeResults(result),
+      videos: normalizeYoutubeResults(result, team),
     }));
   } catch (error) {
     console.log('Error in fetchTeamVideosHandler', error);
