@@ -1,44 +1,59 @@
 export default class YoutubePlayer {
   constructor(mountId) {
+    this.ready = false;
     this.player = new window.YT.Player(mountId, {
       height: '360',
       width: '640',
+      events: {
+        'onReady': this.onPlayerReady,
+      },
     });
   }
 
+  onPlayerReady = () => {
+    console.log('ON PLAYER READY');
+    this.ready = true;
+  }
+
+  isReady = () => {
+    return this.ready;
+  }
+
   mute = () => {
-    this.player.mute();
+    if (this.ready) this.player.mute();
   };
 
   unMute = () => {
-    this.player.unMute();
+    if (this.ready) this.player.unMute();
   };
 
   play = () => {
-    this.player.playVideo();
+    if (this.ready) this.player.playVideo();
   };
 
   pause = () => {
-    this.player.pauseVideo();
+    if (this.ready) this.player.pauseVideo();
   };
 
   seek = timeInSeconds => {
-    this.player.seekTo(timeInSeconds);
+    if (this.ready) this.player.seekTo(timeInSeconds);
   };
 
   getCurrentTime = () => {
+    if (!this.ready) return 0;
     return this.player.getCurrentTime();
   };
 
   getDuration = () => {
+    if (this.ready) return 0;
     return this.player.getDuration();
   };
 
   reset = () => {
-    this.player.stopVideo();
+    if (this.ready) this.player.stopVideo();
   };
 
   load = videoId => {
-    this.player.loadVideoById({ videoId });
+    if (this.ready) this.player.loadVideoById({ videoId });
   };
 }

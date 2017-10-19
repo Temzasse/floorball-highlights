@@ -6,13 +6,7 @@ import { bindActionCreators } from 'redux';
 import Layout from 'react-components-kit/dist/Layout';
 import Gutter from 'react-components-kit/dist/Gutter';
 import media from 'react-components-kit/dist/media';
-import Modal from 'react-components-kit/dist/Modal';
 import Icon from 'react-components-kit/dist/Icon';
-import Button from 'react-components-kit/dist/Button';
-import ToggleSwitch from 'react-components-kit/dist/ToggleSwitch';
-import Divider from 'react-components-kit/dist/Divider';
-import Heading from 'react-components-kit/dist/Heading';
-import Text from 'react-components-kit/dist/Text';
 
 import { getSelectedTeam } from './teams/teams.ducks';
 import { init } from './init/init.ducks';
@@ -21,14 +15,15 @@ import {
   getFilteringStatus,
   toggleFiltering,
 } from './videos/videos.ducks';
+
 import goalImg from './assets/goal.svg';
-import playImg from './assets/play.svg';
 import withAPIs from './init/withAPIs';
+import theme from './assets/theme';
 import TeamListMenu from './teams/listmenu';
 import Playlist from './videos/playlist';
 import VideoDetails from './videos/details';
 import EmptyState from './common/EmptyState';
-import theme from './assets/theme';
+import GuideModal from './common/GuideModal';
 
 class App extends Component {
   static propTypes = {
@@ -66,11 +61,6 @@ class App extends Component {
             </PlaylistWrapper>,
             <VideoDetailsWrapper flex='1'>
               <VideoDetails />
-              {!selectedVideo &&
-                <DesktopEmpty>
-                  <EmptyState img={playImg} text='Valitse video listasta' />
-                </DesktopEmpty>
-              }
             </VideoDetailsWrapper>
           ] :
           <EmptyWrapper flex='1'>
@@ -90,46 +80,12 @@ class App extends Component {
           />
         </Info>
 
-        <Modal
+        <GuideModal
+          onToggleFiltering={this.props.toggleFiltering}
+          filteringToggled={filtering}
           visible={showInfo}
           hide={this.toggleInfo}
-          backdropBg='rgba(33, 37, 96, 0.8)'
-          elevation={99999}
-        >
-          <Modal.Body>
-            <Heading color={theme.secondaryColor} style={{ marginTop: 0 }}>
-              Asetukset:
-            </Heading>
-            <Layout align='center'>
-              <Layout.Box flex='1'>
-                Yritä näyttää vain maalikoosteet:
-              </Layout.Box>
-              <Layout.Box>
-                <ToggleSwitch
-                  isToggled={filtering}
-                  onToggle={this.props.toggleFiltering}
-                />
-              </Layout.Box>
-            </Layout>
-            <Divider />
-            <Text bold color={theme.secondaryColor}>
-              HUOM!&nbsp;
-            </Text>
-            <Text p>
-              Suosittelemme sinua lisäämään tämän sovelluksen puhelimesi kotivalikkoon,
-              jotta käyttökokemuksesi olisi mahdollisimman hyvä.
-            </Text>
-            <Gutter vertical />
-            <Text p>
-              Kotivalikkoon lisääminen onnistuu selaimesi asetuksista kohdasta&nbsp;
-              <Text i>Lisää kotivalikkoon</Text> tai <Text i>Add to Homescreen</Text>.
-            </Text>
-            <Gutter vertical />
-            <Modal.Footer>
-              <Button flat onClick={this.toggleInfo}>OK</Button>
-            </Modal.Footer>
-          </Modal.Body>
-        </Modal>
+        />
 
       </Content>
     );
@@ -163,12 +119,6 @@ const VideoDetailsWrapper = styled(Layout.Box)`
   ${media.tablet`
     flex: none;
     padding: 0px;
-  `}
-`;
-
-const DesktopEmpty = styled.div`
-  ${media.tablet`
-    display: none;
   `}
 `;
 

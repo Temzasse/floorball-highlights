@@ -1,4 +1,4 @@
-import { fork, takeEvery } from 'redux-saga/effects';
+// import { all, takeEvery } from 'redux-saga/effects';
 import { handleActions, createAction } from 'redux-actions';
 import update from 'immutability-helper';
 
@@ -41,14 +41,4 @@ export const getSelectedTeam = state => {
 };
 
 // Sagas
-function * foo() {
-  yield console.log('FOOOO');
-}
-
-function * watchFoo() {
-  yield takeEvery(TEAMS.TOGGLE_DETAILS, foo);
-}
-
-export function * teamsSagas() {
-  yield fork(watchFoo);
-}
+// ...

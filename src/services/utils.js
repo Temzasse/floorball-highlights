@@ -26,7 +26,6 @@ const highlightsTerms = ['highlights', 'kooste'];
 export const filterVideos = videos => {
   return videos.filter(({ title }) => {
     const t = title.toLowerCase();
-    console.debug('[t]', t);
     let isValid = true;
 
     invalidTerms.forEach(term => {
@@ -41,9 +40,17 @@ export const filterVideos = videos => {
   });
 };
 
+export const getSettings = () => {
+  try {
+    const settings = localStorage.getItem('settings');
+    return JSON.parse(settings);
+  } catch (e) {
+    return {};
+  }
+};
+
 export const updateSettings = partial => {
-  const s = localStorage.getItem('settings');
-  const settings = s ? JSON.parse(s) : {};
+  const settings = getSettings();
   const newSettings = update(settings, { $merge: partial });
   localStorage.setItem('settings', JSON.stringify(newSettings));
 };

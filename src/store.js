@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { fork } from 'redux-saga/effects';
-import teams, { teamsSagas } from './teams/teams.ducks';
+import teams from './teams/teams.ducks';
 import videos, { videosSagas } from './videos/videos.ducks';
 import initReducer, { initSagas } from './init/init.ducks';
 
@@ -12,8 +12,8 @@ const rootReducer = combineReducers({
 });
 
 function* rootSaga() {
+  // yield fork(teamsSagas);
   yield fork(videosSagas);
-  yield fork(teamsSagas);
   yield fork(initSagas);
 }
 

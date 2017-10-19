@@ -1,13 +1,14 @@
-import { fork, takeLatest, put, select } from 'redux-saga/effects';
+import { all, takeLatest, put, select, call } from 'redux-saga/effects';
 import { handleActions, createAction } from 'redux-actions';
 import update from 'immutability-helper';
 import { TEAMS, getSelectedTeamId, getTeamsById } from '../teams/teams.ducks';
 import {
-  getYoutubeSearchApi,
   normalizeYoutubeResults,
   filterVideos,
   updateSettings,
 } from '../services/utils';
+
+import * as api from '../services/api';
 
 import { createTypes } from '../utils';
 
@@ -71,13 +72,7 @@ export const getSelectedVideoTeam = state => {
 // Sagas
 function * fetchTeamVideosHandler({ payload: team }) {
   try {
-    const yt = getYoutubeSearchApi();
-    const { result } = yield yt.search.list({
-      channelId: team.channelId,
-      part: 'snippet',
-      maxResults: 30,
-      order: 'date',
-    });
+    const { result } = yield call(api.fetchTeamVideos, team.channelId);
     yield put(receiveVideos({
       team,
       videos: normalizeYoutubeResults(result, team),
@@ -92,15 +87,9 @@ function * filteringHandler() {
   yield updateSettings({ filtering });
 }
 
-function * watchSelectTeam() {
-  yield takeLatest(TEAMS.SELECT, fetchTeamVideosHandler);
-}
-
-function * watchFiltering() {
-  yield takeLatest(VIDEOS.TOGGLE_FILTER, filteringHandler);
-}
-
 export function * videosSagas() {
-  yield fork(watchSelectTeam);
-  yield fork(watchFiltering);
+  yield all([
+    takeLatest(TEAMS.SELECT, fetchTeamVideosHandler),
+    takeLatest(VIDEOS.TOGGLE_FILTER, filteringHandler),
+  ]);
 }
