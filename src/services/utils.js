@@ -42,8 +42,9 @@ export const filterVideos = videos => {
 
 export const getSettings = () => {
   try {
-    const settings = localStorage.getItem('settings');
-    return JSON.parse(settings);
+    const s = localStorage.getItem('settings');
+    if (!s) return {};
+    return JSON.parse(s) || {};
   } catch (e) {
     return {};
   }
