@@ -14,6 +14,7 @@ import {
   getSelectedVideo,
   getFilteringStatus,
   toggleFiltering,
+  getVideoActiveStatus,
 } from './videos/videos.ducks';
 
 import goalImg from './assets/goal.svg';
@@ -29,6 +30,7 @@ class App extends Component {
   static propTypes = {
     filtering: PropTypes.bool.isRequired,
     toggleFiltering: PropTypes.func.isRequired,
+    videoActive: PropTypes.bool.isRequired,
     selectedTeam: PropTypes.object,
     selectedVideo: PropTypes.object,
   }
@@ -46,7 +48,7 @@ class App extends Component {
   }
 
   render() {
-    const { selectedTeam, selectedVideo, filtering } = this.props;
+    const { selectedTeam, selectedVideo, filtering, videoActive } = this.props;
     const { showInfo } = this.state;
 
     return (
@@ -56,7 +58,7 @@ class App extends Component {
 
         {(selectedTeam || selectedVideo) ?
           [
-            <PlaylistWrapper>
+            <PlaylistWrapper disableScroll={videoActive}>
               <Playlist />
             </PlaylistWrapper>,
             <VideoDetailsWrapper flex='1'>
@@ -110,6 +112,7 @@ const PlaylistWrapper = styled(Layout.Box)`
     flex: 1;
     width: 100%;
     padding: 12px;
+    ${props => props.disableScroll && 'overflow-y: hidden;'}
   `}
 `;
 
@@ -138,6 +141,7 @@ const mapStateToProps = state => ({
   selectedVideo: getSelectedVideo(state),
   selectedTeam: getSelectedTeam(state),
   filtering: getFilteringStatus(state),
+  videoActive: getVideoActiveStatus(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
