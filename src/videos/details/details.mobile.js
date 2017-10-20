@@ -53,6 +53,16 @@ class VideoDetails extends Component {
     const { active, selectedVideo, selectedVideoTeam } = this.props;
     return (
       <VideoDetailsWrapper column active={active}>
+        <Header>
+          <Icon
+            name='ios-close-outline'
+            size='32px'
+            onClick={this.close}
+            color={theme.primaryColor}
+            touchable
+          />
+        </Header>
+
         <Layout.Box>
           <Video>
             <div id='ytPlayer' />
@@ -60,10 +70,10 @@ class VideoDetails extends Component {
 
           {selectedVideo &&
             <Details column>
-              <Heading h2 color={theme.secondaryColor}>
+              <Heading h3 color={theme.secondaryColor}>
                 {selectedVideo.title}
               </Heading>
-              <Text>{selectedVideo.description}</Text>
+              <Text size='14px'>{selectedVideo.description}</Text>
               <Divider />
               <Layout align='center'>
                 <Layout.Box>
@@ -75,7 +85,7 @@ class VideoDetails extends Component {
                     <Text size='18px' bold>
                       {selectedVideoTeam.name}
                     </Text>
-                    <Text size='14px' color='#888'>
+                    <Text size='12px' color='#888'>
                       Julkaistu:&nbsp;
                       {format(
                         new Date(selectedVideo.publishedAt),
@@ -89,7 +99,7 @@ class VideoDetails extends Component {
             </Details>
           }
         </Layout.Box>
-
+        {/*
         <Footer justify='center'>
           <Icon
             name='ios-close'
@@ -98,6 +108,7 @@ class VideoDetails extends Component {
             color={theme.primaryColor}
           />
         </Footer>
+        */}
       </VideoDetailsWrapper>
     );
   }
@@ -107,12 +118,12 @@ const VideoDetailsWrapper = styled(Layout)`
   height: 100vh;
   width: 100vw;
   z-index: 10;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   background-color: #fff;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   transition: transform 0.3s ease, visibility 0.3s;
   transform: translateY(${props => props.active ? '0px' : '100%'});
@@ -137,17 +148,25 @@ const Details = styled(Layout)`
   padding: 0px 16px;
 `;
 
-const Footer = styled(Layout)`
-  padding: 16px;
+// const Footer = styled(Layout)`
+//   padding: 16px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
+
+const Header = styled(Layout)`
+  flex: none;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
 `;
 
 const TeamLogo = styled.div`
-  height: 80px;
-  width: 80px;
-  border-radius: 16px;
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   background-color: #f5f5f5;
   background-image: url(${props => props.logo});
