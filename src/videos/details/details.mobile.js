@@ -107,7 +107,7 @@ const VideoDetailsWrapper = styled(Layout)`
   height: 100vh;
   width: 100vw;
   z-index: 10;
-  position: fixed;
+  position: absolute;
   top: 0px;
   left: 0px;
   background-color: #fff;
